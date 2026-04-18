@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0e00">
+<title>Marco Island Fishing Report — April 18, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;background:#1a0e00;color:#fef3c7;font-family:'Inter',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;">
+
+<div style="max-width:780px;margin:0 auto;padding:18px 16px 80px;">
+
+  <header style="text-align:center;padding:18px 8px 14px;border-bottom:1px solid rgba(202,138,4,0.25);margin-bottom:14px;">
+    <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:#ca8a04;text-transform:uppercase;">Gulf Coast · SW Florida</div>
+    <h1 style="font-family:'Cinzel',serif;font-size:28px;margin:8px 0 4px;color:#fef3c7;letter-spacing:1px;">Marco Island Fishing Report</h1>
+    <div style="font-size:13px;color:#e7c77a;">Weekly inshore · nearshore · backwater digest</div>
+    <div style="font-size:12px;color:#a88a4a;margin-top:6px;">Saturday, April 18, 2026</div>
+  </header>
+
+  <!-- Email bar -->
+  <div style="background:linear-gradient(90deg,#2a1a04,#3a2408);border:1px solid #ca8a04;border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+    <div style="font-size:13px;color:#fef3c7;">📧 Weekly → <b style="color:#ca8a04;">C4demonica@gmail.com</b> · Every Friday</div>
+    <button onclick="copyEmail()" style="background:#ca8a04;color:#1a0e00;border:0;padding:7px 12px;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;">Copy for Email</button>
+  </div>
+
+  <!-- Tabs -->
+  <div style="display:flex;gap:4px;background:#120800;border:1px solid rgba(202,138,4,0.35);border-radius:10px;padding:4px;margin-bottom:16px;">
+    <button id="tab-catches" onclick="showTab('catches')" style="flex:1;background:#ca8a04;color:#1a0e00;border:0;padding:10px 8px;border-radius:7px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;">CATCHES</button>
+    <button id="tab-breakdown" onclick="showTab('breakdown')" style="flex:1;background:transparent;color:#fef3c7;border:0;padding:10px 8px;border-radius:7px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;">BREAKDOWN</button>
+    <button id="tab-script" onclick="showTab('script')" style="flex:1;background:transparent;color:#fef3c7;border:0;padding:10px 8px;border-radius:7px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;">D-ID SCRIPT</button>
+  </div>
+
+  <!-- CATCHES TAB -->
+  <section id="section-catches">
+
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+        <div style="font-weight:700;color:#fef3c7;font-size:15px;">Capt. Mark Ward</div>
+        <div style="font-size:12px;color:#a88a4a;">Apr 16, 2026</div>
+      </div>
+      <div style="font-size:12px;color:#ca8a04;margin-top:2px;">Backcountry shorelines · Marco–Naples</div>
+      <div style="margin:8px 0 6px;">
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Snook</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Redfish</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Seatrout</span>
+      </div>
+      <div style="font-size:13px;color:#e7c77a;line-height:1.5;">Snook taking up usual haunts on outside points, oyster bars and shorelines as water warms. Solid mixed bag of seatrout and reds tucked tight to deeper banks. 3/8 oz paddle tails on jigheads still producing best.</div>
+      <div style="font-size:11px;color:#8a6a3a;margin-top:8px;">Source: Naples Fishing Charters</div>
+    </div>
+
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+        <div style="font-weight:700;color:#fef3c7;font-size:15px;">Capt. Evan Noponen</div>
+        <div style="font-size:12px;color:#a88a4a;">Apr 15, 2026</div>
+      </div>
+      <div style="font-size:12px;color:#ca8a04;margin-top:2px;">10,000 Islands backcountry</div>
+      <div style="margin:8px 0 6px;">
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Tarpon</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Snook</span>
+      </div>
+      <div style="font-size:13px;color:#e7c77a;line-height:1.5;">Early tarpon showing in backcountry lakes and creeks — poon-sized juvies rolling steady in the morning. Bigger migratory fish expected off the beaches late April into May. Fly anglers getting shots on calm tides.</div>
+      <div style="font-size:11px;color:#8a6a3a;margin-top:8px;">Source: SWFL Guide Service</div>
+    </div>
+
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+        <div style="font-weight:700;color:#fef3c7;font-size:15px;">Local Guide — FishingBooker</div>
+        <div style="font-size:12px;color:#a88a4a;">Apr 14, 2026</div>
+      </div>
+      <div style="font-size:12px;color:#ca8a04;margin-top:2px;">Caxambas Pass & Hurricane Pass</div>
+      <div style="margin:8px 0 6px;">
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Pompano</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Jack Crevalle</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Mangrove Snapper</span>
+      </div>
+      <div style="font-size:13px;color:#e7c77a;line-height:1.5;">Pompano run holding up in the passes on sand jigs tipped with shrimp. Jacks busting bait in tight schools around incoming tides. Mangroves chewing on bridge shadow lines at night.</div>
+      <div style="font-size:11px;color:#8a6a3a;margin-top:8px;">Source: FishingBooker — Marco Island</div>
+    </div>
+
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+        <div style="font-weight:700;color:#fef3c7;font-size:15px;">Naples Gone Fishin</div>
+        <div style="font-size:12px;color:#a88a4a;">Apr 13, 2026</div>
+      </div>
+      <div style="font-size:12px;color:#ca8a04;margin-top:2px;">Nearshore reefs · under 5 miles</div>
+      <div style="margin:8px 0 6px;">
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Spanish Mackerel</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Sharks</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Goliath Grouper</span>
+      </div>
+      <div style="font-size:13px;color:#e7c77a;line-height:1.5;">Spanish mackerel ripping through glass minnow balls just off the beaches. Blacktip and bonnetheads steady on chunk baits. Goliaths stacked on nearshore wrecks — pull-and-release only.</div>
+      <div style="font-size:11px;color:#8a6a3a;margin-top:8px;">Source: Naples Gone Fishin Calendar</div>
+    </div>
+
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+        <div style="font-weight:700;color:#fef3c7;font-size:15px;">Cape Weather Report</div>
+        <div style="font-size:12px;color:#a88a4a;">Apr 12, 2026</div>
+      </div>
+      <div style="font-size:12px;color:#ca8a04;margin-top:2px;">Jolley Bridge & Goodland docks</div>
+      <div style="margin:8px 0 6px;">
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Sheepshead</span>
+        <span style="display:inline-block;background:#3a2408;color:#fef3c7;font-size:11px;padding:3px 8px;border-radius:10px;margin:2px 4px 2px 0;">Mangrove Snapper</span>
+      </div>
+      <div style="font-size:13px;color:#e7c77a;line-height:1.5;">Sheepshead still running strong on the bridge pilings — tail end of the spawn but numbers remain excellent. Live shrimp, small hooks, fish tight to structure. Mangroves filling the cooler alongside them.</div>
+      <div style="font-size:11px;color:#8a6a3a;margin-top:8px;">Source: Cape Weather · Naples & Marco Report</div>
+    </div>
+
+  </section>
+
+  <!-- BREAKDOWN TAB -->
+  <section id="section-breakdown" style="display:none;">
+
+    <details open style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:10px 14px;margin-bottom:12px;">
+      <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#fef3c7;list-style:none;">🌿 Inshore</summary>
+      <div style="padding-top:10px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Snook</span><span style="color:#dc2626;font-weight:700;">HOT</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Redfish</span><span style="color:#dc2626;font-weight:700;">HOT</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Seatrout</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Pompano</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+      </div>
+    </details>
+
+    <details open style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:10px 14px;margin-bottom:12px;">
+      <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#fef3c7;list-style:none;">⚡ Nearshore ≤ 5 mi</summary>
+      <div style="padding-top:10px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Spanish Mackerel</span><span style="color:#dc2626;font-weight:700;">HOT</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Mangrove Snapper</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Sharks</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Goliath Grouper</span><span style="color:#dc2626;font-weight:700;">HOT</span></div>
+      </div>
+    </details>
+
+    <details open style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:10px 14px;margin-bottom:12px;">
+      <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#fef3c7;list-style:none;">🌉 Backwater & Bridge</summary>
+      <div style="padding-top:10px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Tarpon (early/juvie)</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Sheepshead</span><span style="color:#dc2626;font-weight:700;">HOT</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(202,138,4,0.15);"><span>Mangrove Snapper</span><span style="color:#ca8a04;font-weight:700;">GOOD</span></div>
+      </div>
+    </details>
+
+  </section>
+
+  <!-- D-ID SCRIPT TAB -->
+  <section id="section-script" style="display:none;">
+    <div style="background:#221202;border:1px solid rgba(202,138,4,0.35);border-radius:12px;padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-weight:700;color:#ca8a04;font-size:14px;">D-ID Host Script · ~300 words</div>
+        <button onclick="copyScript()" style="background:#ca8a04;color:#1a0e00;border:0;padding:7px 12px;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;">Copy</button>
+      </div>
+      <div id="script-text" style="font-size:13.5px;line-height:1.65;color:#e7c77a;white-space:pre-wrap;">Hey anglers, welcome back to your Marco Island Fishing Report for the week of April 18th, 2026. Water temps are climbing, the wind has finally laid down, and the bite is lighting up all over the backcountry.
+
+Inshore is firing right now. Snook have pushed out to their spring haunts — outside points, oyster bars, and mangrove shorelines. Reds are running with them, tucked tight to the deeper banks on moving water. If you're throwing a 3/8 ounce jighead with a paddle tail or a shrimp pattern, you're in business. Seatrout numbers are solid on the grass flats, and pompano are still ripping through Caxambas and Hurricane Pass on sand jigs tipped with fresh shrimp.
+
+Nearshore — inside that five-mile line — the Spanish mackerel are the headline. They're busting glass minnow balls just off the beaches. Silver spoons and small jigs will wear you out. Goliath grouper are stacked on every nearshore wreck — strictly catch-and-release pullouts, but the fight alone is worth the gas. Mixed sharks and mangrove snapper round out the bite.
+
+Backwater and bridges are hot too. Sheepshead are still gnawing pilings — tail end of the spawn but the numbers are excellent. Mangrove snapper are holding right alongside them. And the big one: tarpon are starting to show. Juvies are rolling in the backcountry creeks and lakes, and the migratory silver kings should start pouring onto the beaches any day now. End of April into May is when it really explodes.
+
+Bottom line — get on the water this week. The window is wide open. Tight lines, stay safe out there, and I'll see you next Friday.</div>
+    </div>
+  </section>
+
+  <footer style="text-align:center;padding:20px 8px 0;margin-top:20px;border-top:1px solid rgba(202,138,4,0.25);color:#8a6a3a;font-size:12px;">
+    <div>Marco Island Fishing Report · Inshore · Nearshore ≤ 5 mi · Backwater</div>
+    <div style="margin-top:6px;">Generated April 18, 2026 · Weekly to C4demonica@gmail.com</div>
+  </footer>
+
+</div>
+
+<script>
+function showTab(name){
+  ['catches','breakdown','script'].forEach(function(n){
+    document.getElementById('section-'+n).style.display = (n===name)?'block':'none';
+    var btn = document.getElementById('tab-'+n);
+    if(n===name){ btn.style.background='#ca8a04'; btn.style.color='#1a0e00'; }
+    else { btn.style.background='transparent'; btn.style.color='#fef3c7'; }
+  });
+}
+function copyEmail(){
+  var body = document.getElementById('section-catches').innerText + '\n\n' + document.getElementById('section-breakdown').innerText;
+  navigator.clipboard.writeText(body).then(function(){ alert('Copied report for email'); });
+}
+function copyScript(){
+  var t = document.getElementById('script-text').innerText;
+  navigator.clipboard.writeText(t).then(function(){ alert('Script copied'); });
+}
+</script>
+
+</body>
+</html>
