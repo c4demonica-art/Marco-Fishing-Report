@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Marco Fishing">
+<meta name="theme-color" content="#1a0e00">
+<title>Marco Island Fishing Report</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { min-height: 100vh; background: linear-gradient(170deg, #1a0e00 0%, #2d1a00 40%, #0d0800 100%); font-family: -apple-system, sans-serif; color: #d4b896; padding-bottom: env(safe-area-inset-bottom); }
+.glow { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); width: 500px; height: 260px; pointer-events: none; background: radial-gradient(ellipse, rgba(234,179,8,0.16) 0%, rgba(180,83,9,0.07) 55%, transparent 75%); }
+.wrap { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 32px 16px 80px; }
+.header { text-align: center; margin-bottom: 20px; }
+.badge { display: inline-block; font-size: 11px; font-family: monospace; letter-spacing: .16em; color: #a16207; background: rgba(234,179,8,.07); border: 1px solid rgba(234,179,8,.15); border-radius: 20px; padding: 5px 16px; margin-bottom: 12px; }
+h1 { font-family: Georgia, serif; font-size: clamp(28px,7vw,44px); font-weight: 800; color: #fef3c7; line-height: 1.08; letter-spacing: -.02em; margin-bottom: 5px; }
+.subhead { color: #78350f; font-size: 11px; font-family: monospace; }
+.new-badge { display: inline-block; background: rgba(249,115,22,.15); border: 1px solid rgba(249,115,22,.3); border-radius: 20px; padding: 2px 8px; font-size: 10px; color: #f97316; font-family: monospace; margin-left: 5px; vertical-align: middle; }
+.alert-bar { background: linear-gradient(135deg, rgba(234,179,8,.12), rgba(180,83,9,.08)); border: 1px solid rgba(234,179,8,.3); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #fef3c7; line-height: 1.7; text-align: center; }
+.alert-bar strong { color: #fbbf24; font-size: 15px; }
+.install-banner { background: rgba(234,179,8,.08); border: 1px solid rgba(234,179,8,.2); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #ca8a04; line-height: 1.7; display: none; }
+.emailbar { background: rgba(234,179,8,.05); border: 1px solid rgba(234,179,8,.12); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.emailbar span { color: #a16207; font-size: 12px; font-family: monospace; flex: 1; }
+.emailbar em { color: #ca8a04; font-style: normal; }
+.copy-btn { background: rgba(234,179,8,.1); border: 1px solid rgba(234,179,8,.2); border-radius: 8px; padding: 5px 13px; color: #ca8a04; font-size: 12px; cursor: pointer; font-family: monospace; transition: all .2s; white-space: nowrap; }
+.copy-btn.done { background: rgba(34,197,94,.15); border-color: rgba(34,197,94,.3); color: #86efac; }
+.tabs { display: flex; background: rgba(0,0,0,.3); border-radius: 12px; margin-bottom: 16px; overflow: hidden; border: 1px solid rgba(234,179,8,.1); }
+.tab { flex: 1; padding: 10px 4px; background: transparent; border: none; border-bottom: 2px solid transparent; color: #78350f; font-size: 11px; font-weight: 600; cursor: pointer; font-family: monospace; letter-spacing: .03em; transition: all .2s; }
+.tab.active { background: rgba(234,179,8,.15); border-bottom-color: #ca8a04; color: #fef3c7; }
+.overview { background: rgba(254,243,199,.03); border: 1px solid rgba(234,179,8,.18); border-radius: 16px; padding: 16px 18px; margin-bottom: 12px; }
+.sec-label { font-size: 10px; color: #a16207; font-family: monospace; letter-spacing: .1em; margin-bottom: 7px; }
+.overview p { color: #d4b896; font-size: 14px; line-height: 1.78; margin-bottom: 10px; }
+.cond-box { background: rgba(0,0,0,.2); border-radius: 9px; padding: 9px 13px; font-size: 13px; color: #a8947a; line-height: 1.6; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.tag { background: rgba(234,179,8,.08); border: 1px solid rgba(234,179,8,.18); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: #ca8a04; font-family: monospace; }
+.section-card { background: rgba(254,252,232,.02); border: 1px solid rgba(234,179,8,.16); border-radius: 16px; overflow: hidden; margin-bottom: 11px; }
+.sec-hdr { background: rgba(234,179,8,.07); padding: 12px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+.sec-hdr h2 { flex: 1; font-family: Georgia, serif; font-size: 17px; font-weight: 700; color: #fef08a; }
+.chevron { color: #a16207; font-size: 13px; }
+.sec-body { padding: 13px 16px; border-top: 1px solid rgba(234,179,8,.1); }
+.sp-row { background: rgba(0,0,0,.22); border-radius: 10px; padding: 10px 12px; margin-bottom: 7px; border-left: 3px solid rgba(234,179,8,.35); }
+.sp-name-row { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; flex-wrap: wrap; }
+.sp-name { font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #fef9c3; }
+.rating { font-size: 11px; font-family: monospace; padding: 2px 8px; border-radius: 10px; }
+.HOT { color: #f97316; background: rgba(249,115,22,.12); }
+.GOOD { color: #22c55e; background: rgba(34,197,94,.1); }
+.SLOW { color: #94a3b8; background: rgba(148,163,184,.1); }
+.sp-detail { font-size: 13px; color: #a8947a; line-height: 1.65; }
+.pro-tip { margin-top: 10px; padding: 9px 12px; background: rgba(234,179,8,.05); border-radius: 8px; }
+.pt-label { font-size: 10px; color: #a16207; font-family: monospace; letter-spacing: .08em; margin-bottom: 3px; }
+.pro-tip p { font-size: 13px; color: #b5956f; line-height: 1.65; }
+.catch-meta { font-size: 11px; color: #a16207; font-family: monospace; letter-spacing: .1em; margin-bottom: 11px; }
+.catch-card { background: rgba(0,0,0,.25); border: 1px solid rgba(234,179,8,.13); border-radius: 13px; padding: 12px 14px; margin-bottom: 9px; }
+.catch-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 5px; margin-bottom: 6px; }
+.catch-who { font-family: Georgia, serif; font-size: 14px; font-weight: 700; color: #fef3c7; }
+.catch-loc { font-size: 11px; color: #a16207; font-family: monospace; margin-top: 2px; }
+.catch-date { font-size: 11px; color: #44200a; font-family: monospace; white-space: nowrap; }
+.catch-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 6px; }
+.ct { background: rgba(234,179,8,.07); border: 1px solid rgba(234,179,8,.15); border-radius: 20px; padding: 2px 8px; font-size: 11px; color: #ca8a04; font-family: monospace; }
+.catch-text { font-size: 13px; color: #a8947a; line-height: 1.65; }
+.catch-src { font-size: 10px; color: #2a1200; font-family: monospace; margin-top: 6px; }
+.script-box { background: rgba(0,0,0,.3); border: 1px solid rgba(234,179,8,.15); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+.script-box h3 { font-family: Georgia, serif; font-size: 16px; color: #fef08a; margin-bottom: 6px; }
+.script-box p { font-size: 13px; color: #78350f; line-height: 1.7; margin-bottom: 12px; }
+.script-text { background: rgba(0,0,0,.4); border: 1px solid rgba(234,179,8,.2); border-radius: 10px; padding: 14px 16px; font-size: 14px; color: #d4b896; line-height: 1.85; font-family: Georgia, serif; white-space: pre-wrap; margin-bottom: 12px; }
+.script-btn { width: 100%; background: linear-gradient(135deg,#d97706,#92400e); color: #fef3c7; border: none; border-radius: 10px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: monospace; letter-spacing: .04em; }
+.script-btn.done { background: rgba(34,197,94,.2); color: #86efac; border: 1px solid rgba(34,197,94,.3); }
+.did-steps { background: rgba(234,179,8,.04); border: 1px solid rgba(234,179,8,.1); border-radius: 12px; padding: 14px 16px; }
+.did-steps h4 { font-size: 11px; color: #a16207; font-family: monospace; letter-spacing: .1em; margin-bottom: 10px; }
+.did-steps ol { padding-left: 18px; }
+.did-steps li { font-size: 13px; color: #78350f; line-height: 1.9; }
+.did-steps li em { color: #ca8a04; font-style: normal; }
+.refresh-box { margin-top: 22px; background: rgba(0,0,0,.25); border: 1px solid rgba(234,179,8,.08); border-radius: 14px; padding: 13px 16px; cursor: pointer; }
+.refresh-label { font-size: 10px; color: #a16207; font-family: monospace; letter-spacing: .1em; margin-bottom: 4px; }
+.refresh-hint { font-size: 13px; color: #44200a; }
+.refresh-cmd { display: inline-block; margin-top: 7px; background: rgba(234,179,8,.1); border: 1px solid rgba(234,179,8,.2); border-radius: 8px; padding: 6px 12px; color: #ca8a04; font-family: monospace; font-size: 12px; }
+.footer { text-align: center; margin-top: 22px; color: #2a1200; font-size: 11px; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="install-banner" id="installBanner">
+  <strong>📲 Add to Home Screen</strong><br>Tap <strong>Share</strong> in Safari → <strong>"Add to Home Screen"</strong>
+</div>
+
+<div class="header">
+  <div class="badge">MARCO ISLAND, FLORIDA</div>
+  <h1>Fishing Report</h1>
+  <div class="subhead">April 18, 2026 &middot; Inshore &middot; Nearshore &le;5mi &middot; Backwater <span class="new-badge">FRESH</span></div>
+</div>
+
+<div class="alert-bar">
+  🏆 <strong>PEAK TARPON SEASON BUILDING</strong><br>
+  Snook · Tarpon · Redfish — Grand Slam in play. Bigger concentrations arriving daily.
+</div>
+
+<div class="emailbar">
+  <span>📧</span>
+  <span>Weekly &rarr; <em>C4demonica@gmail.com</em> &middot; Every Friday</span>
+  <button class="copy-btn" id="copyBtn" onclick="copyEmail()">Copy for Email</button>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-catches" onclick="switchTab('catches')">🎣 CATCHES</button>
+  <button class="tab" id="tab-breakdown" onclick="switchTab('breakdown')">📊 BREAKDOWN</button>
+  <button class="tab" id="tab-script" onclick="switchTab('script')">🎬 D-ID SCRIPT</button>
+</div>
+
+<!-- CATCHES TAB -->
+<div id="pane-catches">
+  <div class="catch-meta">7 REPORTS FROM LOCAL GUIDES &middot; APRIL 18, 2026</div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Capt. Tyler Keegan <span class="new-badge">THIS WEEK</span></div><div class="catch-loc">📍 Marco Island inshore &amp; nearshore</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Snook</span><span class="ct">Mangrove Snapper</span><span class="ct">Tarpon</span></div>
+    <div class="catch-text">Great snook, mangrove snapper and small tarpon bite right now. Redfish picking up in good numbers. Spring transition fully locked in — snook wherever you fish them: backcountry, pass, beach, or nearshore wrecks. Snook bite has been incredible.</div>
+    <div class="catch-src">via captainexperiences.com</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Capt. Mark Ward — Naples Fishing Charters <span class="new-badge">THIS WEEK</span></div><div class="catch-loc">📍 Passes, beaches &amp; backcountry</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Snook</span><span class="ct">Tarpon</span><span class="ct">Sharks</span><span class="ct">Mackerel</span><span class="ct">Redfish</span></div>
+    <div class="catch-text">Tarpon confirmed in backcountry and now starting to show off the beaches — bigger concentrations building toward end of April and peak in May. Snook in passes, adjacent bays, and along the beaches in clear water. Beach sight fishing active — snook cruising within 5 feet of shore. Sharks and mackerel working the beach zone. Booking filling fast for April–July tarpon trips.</div>
+    <div class="catch-src">via naplesfishingcharters.org</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Capt. John Pfeiffer — Snookhooker Fishing</div><div class="catch-loc">📍 Ten Thousand Islands &amp; backcountry</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Snook</span><span class="ct">Redfish</span><span class="ct">Tarpon</span></div>
+    <div class="catch-text">Snook on outside points, oyster bars, and shorelines in ambush mode. Redfish prowling shallow flats — eating everything they see. Tarpon migration fully underway. Grand slam is achievable right now. Topwater lures, paddle tails, and suspended presentations all producing. Gin clear water — stealth approach required, start 100 feet from your target.</div>
+    <div class="catch-src">via snookhookerfishing.com</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Tarpon migration — multiple captains</div><div class="catch-loc">📍 Marco Island beaches, Keewaydin Island, Naples</div></div><div class="catch-date">Apr 18, 2026</div></div>
+    <div class="catch-tags"><span class="ct">Tarpon 50–150 lbs</span></div>
+    <div class="catch-text">Schools of migrating silver kings pushing north along the coast at first light, rolling on the surface in calm conditions. Live blue crabs under a float is the top technique — position ahead of the school and present naturally. Peak concentrations expected to build through late April and hit maximum in May. Backcountry tarpon also active in just 2.5–3 feet of water in the bays.</div>
+    <div class="catch-src">via capeweather.com</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Rookery Bay mixed bag report</div><div class="catch-loc">📍 Rookery Bay between Naples &amp; Marco Island</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Seatrout</span><span class="ct">Pompano</span><span class="ct">Redfish</span><span class="ct">Snapper</span><span class="ct">Sharks</span></div>
+    <div class="catch-text">Excellent mixed bag fishing throughout Rookery Bay. Seatrout on live shrimp under popping corks over deeper grass patches on moving tides. Pompano on sandy flats and channel edges — jig tipped with shrimp bounced slowly along the bottom. Redfish around mangrove roots and oyster bars. Mangrove snapper active around structure. Bonnethead sharks mixed in throughout. Calm mornings producing best results.</div>
+    <div class="catch-src">via capeweather.com</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Artificial Reef report</div><div class="catch-loc">📍 1 mile &amp; 5 miles from Caxambas Pass</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Mangrove Snapper</span><span class="ct">Goliath Grouper</span><span class="ct">Kingfish</span><span class="ct">Mackerel</span></div>
+    <div class="catch-text">Both artificial reefs producing consistently. Goliath grouper activity ramping up April into early summer — warmer water bringing aggressive behavior on nearshore structure inside 5 miles. Snapper fast action on both reefs with chum and live shrimp. Kingfish and mackerel working the beach zone with baitfish thick up and down the coast. Easy run from Caxambas Pass.</div>
+    <div class="catch-src">via naplesgonefishin.com</div>
+  </div>
+
+  <div class="catch-card">
+    <div class="catch-top"><div><div class="catch-who">Capt. Evan Noponen — SW Florida Guide Service</div><div class="catch-loc">📍 Ten Thousand Islands backcountry</div></div><div class="catch-date">Apr 2026</div></div>
+    <div class="catch-tags"><span class="ct">Tarpon</span><span class="ct">Snook</span><span class="ct">Redfish</span></div>
+    <div class="catch-text">Tarpon in the backcountry bays, laid up and rolling — eating well. Snook moving to outside points and islands in prep for spawn. Redfish no longer glued to mangrove cover, pushing to open flats and island edges. Work one shoreline and catch multiple species without moving. May is peak season but the bite is excellent right now heading into the best weeks of the year.</div>
+    <div class="catch-src">via swflguideservice.com</div>
+  </div>
+</div>
+
+<!-- BREAKDOWN TAB -->
+<div id="pane-breakdown" style="display:none">
+  <div class="overview">
+    <div class="sec-label">📋 OVERVIEW — APRIL 18, 2026</div>
+    <p>Mid-April and Marco Island is firing on all cylinders. The tarpon migration is building daily with bigger concentrations arriving each week heading toward the May peak. Snook are active everywhere — backcountry, passes, and beach — with clear water opening up sight fishing. Redfish are peak month right now, April and May being the best of the year. A grand slam is absolutely achievable this week.</p>
+    <div class="cond-box">🌤️ Water 78–80°F &middot; Gulf blue-green, excellent clarity &middot; Baitfish heavy along beach zone &middot; Tarpon migration building to peak &middot; April = peak redfish month &middot; Sunrise 7:05am / Sunset 7:52pm</div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-hdr" onclick="toggleSection(this)"><span>🌿</span><h2>Inshore</h2><span class="chevron">▲</span></div>
+    <div class="sec-body">
+      <div class="tags"><span class="tag">Water: 78–80°F</span><span class="tag">Grand slam possible</span><span class="tag">Clear water sight fishing</span></div>
+      <p style="color:#d4b896;font-size:14px;line-height:1.75;margin-bottom:12px">Full spring bite locked in. Snook, redfish and tarpon all active simultaneously. April is the peak month for redfish. Sight fishing excellent in clear conditions.</p>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Snook</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Outside points, oyster bars, mangrove shorelines, passes, and beach — snook are everywhere. Incredible bite wherever you target them. Beach sight fishing in clear water — approach on trolling motor starting 100+ feet away. Topwater at first light, live pilchards or paddle tails as sun rises. Caxambas Pass on outgoing tide a prime spot.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Redfish</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Peak month — April and May are the best redfish months of the year. Pushing to open flats, points, and island edges throughout Ten Thousand Islands. Tailing fish visible on sun-warmed flats. Gold spoons, live shrimp, paddle tails. Work one shoreline and find multiple species. Don't miss this window.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Spotted Seatrout</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Live shrimp under popping corks over deeper grass patches in Rookery Bay. Soft plastics along current seams also productive. Add one to your slam — grand slam status requires a seatrout.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Pompano</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Sandy flats, channel edges, and beach zone. Small jig tipped with shrimp bounced slowly along the bottom. Tigertail Beach and outer bars producing.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Jack Crevalle</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Flooding the passes and beach zone chasing bait schools. Fast action on jigs and spoons. Find the jacks, find the snook — they travel together.</div></div>
+      <div class="pro-tip"><div class="pt-label">💡 PRO TIP</div><p>Start on backcountry flats at first light for redfish and snook, hit Caxambas Pass on the outgoing tide mid-morning, then beach sight fish for snook when sun gets high. Grand slam before noon is realistic this week.</p></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-hdr" onclick="toggleSection(this)"><span>⚡</span><h2>Nearshore (within 5 mi)</h2><span class="chevron">▲</span></div>
+    <div class="sec-body">
+      <div class="tags"><span class="tag">Range: 1–5 miles</span><span class="tag">Baitfish heavy</span><span class="tag">Goliath ramping up</span></div>
+      <p style="color:#d4b896;font-size:14px;line-height:1.75;margin-bottom:12px">Baitfish stacked along the beach zone. Both artificial reefs producing fast snapper action. Goliath grouper getting aggressive on nearshore structure as April water temps peak.</p>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Spanish Mackerel</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Thick along beach zone with baitfish from Marco to Naples. Fast-retrieve spoons or flashy jigs along the surface. Early morning best before afternoon wind builds. Often mixed with kingfish in the same zone.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Mangrove Snapper</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Both artificial reefs (1mi and 5mi from Caxambas Pass in 20–30ft) loaded. Anchor up, chum with glass minnows, drop live shrimp on light fluorocarbon. Quick limit — great table fare. Fish the first hour of incoming tide when current isn't ripping.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Goliath Grouper</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Ramping up April into early summer on nearshore wrecks inside 5 miles. Warmer water triggering aggressive behavior. Large cut bait or live pinfish on heavy tackle. Catch and release only — but the fight is unforgettable.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Blacktip &amp; Spinner Shark</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Still working the nearshore beach zone. Cut bait under a float. Sight-casting on calm glassy mornings when conditions are right.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Kingfish</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Running beach zone with mackerel. Slow-troll live blue runners behind a #2 planer. Pick them up between reef runs.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Tripletail</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">On crab trap floats and floating debris 2–4 miles out. Laying sideways near anything floating. Live shrimp free-lined next to structure. Excellent eating.</div></div>
+      <div class="pro-tip"><div class="pt-label">💡 PRO TIP</div><p>Hit the 1-mile reef for a quick snapper limit, run the beach for mackerel and a shot at beach tarpon on the way back in. Full cooler and possible bucket-list fish — entire trip under 3 hours.</p></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-hdr" onclick="toggleSection(this)"><span>🌉</span><h2>Backwater &amp; Bridge</h2><span class="chevron">▲</span></div>
+    <div class="sec-body">
+      <div class="tags"><span class="tag">Tarpon building</span><span class="tag">Backcountry bays</span><span class="tag">Sight fishing open</span></div>
+      <p style="color:#d4b896;font-size:14px;line-height:1.75;margin-bottom:12px">Tarpon in the backcountry bays and increasingly showing on the beaches. Snook moving to outside points. Clear water making gin-clear sight fishing a reality across the Ten Thousand Islands.</p>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Tarpon</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Backcountry bays — laid up and rolling, eating well. 50–150 lb fish. Also showing on the beaches at first light. Live blue crabs under a float or large threadfin herring. Bigger concentrations building toward May peak. Approach quietly — stealth is critical. Strictly catch and release.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Snook</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Moving to outside points and islands ahead of summer spawn. Creek mouths and mangrove bends where current pushes bait. Gin clear water — trolling motor only, 100+ foot approaches. Topwater early, pilchards as sun rises. Incredible bite right now per multiple captains.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Redfish</span><span class="rating HOT">🔥 HOT</span></div><div class="sp-detail">Pushing to open flats and island edges — visible tailing fish. Mix of redfish, trout, and jacks on the same flat without moving the boat. Best time of year. Peak month is right now.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Backcountry Sharks</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Lemon, bull, blacktip, bonnethead in backcountry bays. Cut bait on the bottom near deeper channel edges. Sharing water with tarpon — find one, find both.</div></div>
+      <div class="sp-row"><div class="sp-name-row"><span class="sp-name">Mangrove Snapper</span><span class="rating GOOD">✅ GOOD</span></div><div class="sp-detail">Docks, bridges, and structure throughout backcountry. Night fishing around lit docks especially productive. Small live shrimp on light fluorocarbon leader.</div></div>
+      <div class="pro-tip"><div class="pt-label">💡 PRO TIP</div><p>High sun mid-morning is when you can see furthest into the gin-clear water. That's your sight fishing window for snook and redfish on the flats. Use trolling motor only — start your approach 100+ feet away. Shadows and noise will spook fish in this clarity.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- D-ID SCRIPT TAB -->
+<div id="pane-script" style="display:none">
+  <div class="script-box">
+    <h3>🎬 Your D-ID Spokesperson Script</h3>
+    <p>Copy this, go to <em>d-id.com</em>, upload your photo, paste it in, pick a voice, and generate. Done in 2 minutes.</p>
+    <div class="script-text" id="scriptText">Good morning and welcome to your Marco Island Fishing Report for the week of April 18th, 2026.
+
+We are right in the heart of the best fishing of the year on Marco Island, and this week does not disappoint.
+
+Let's lead with the big story — tarpon. The silver king migration is building daily. Schools of fish in the 50 to 150 pound range are moving north along the beaches past Marco Island and Keewaydin Island, rolling on the surface at first light in calm conditions. Live blue crabs under a float presented ahead of the school is the top technique. The backcountry bays are also holding laid-up tarpon eating well in just two to three feet of water. Bigger concentrations are expected to build through late April and hit maximum in May — if you've been waiting for tarpon season, it's here right now.
+
+On the inshore side, the grand slam is in play. Capt. John Pfeiffer and Capt. Tyler Keegan both confirm that snook, tarpon, and redfish are all simultaneously catchable this week — add a seatrout and you've got grand slam status. Snook are in the backcountry, in the passes, and now on the beaches in clear water where you can sight fish them cruising within five feet of shore. Approach on trolling motor only, starting a hundred feet away — this water is gin clear and these fish will spook. Topwater plugs at first light, live pilchards once the sun gets up.
+
+Redfish are in their peak month right now. April and May are the best months of the year for Marco Island redfish. They're pushing to open flats and island edges throughout the Ten Thousand Islands — tailing fish visible, eating everything in sight.
+
+Nearshore within five miles of Caxambas Pass, Spanish mackerel and kingfish are thick along the beach zone with baitfish stacked coast to coast. The artificial reef one mile out is loaded with mangrove snapper — quick limit, great table fare, easy run. And Goliath grouper are ramping up on nearshore wrecks as April water temperatures peak.
+
+That is your Marco Island report for April 18th. Tarpon on the beach, snook on the flats, redfish tailing, and snapper on the reef. Get out there this week. Tight lines.</div>
+    <button class="script-btn" id="scriptBtn" onclick="copyScript()">📋 Copy Script for D-ID</button>
+  </div>
+  <div class="did-steps">
+    <h4>📲 HOW TO USE IN D-ID</h4>
+    <ol>
+      <li>Go to <em>d-id.com</em> and log in</li>
+      <li>Click <em>"Create Video"</em></li>
+      <li>Upload your photo</li>
+      <li>Click <em>"Add Script"</em> → paste the copied text</li>
+      <li>Choose a voice you like</li>
+      <li>Hit <em>"Generate"</em> — done in about 2 minutes</li>
+      <li>Download and share!</li>
+    </ol>
+  </div>
+</div>
+
+<div class="refresh-box" onclick="toggleRefresh()">
+  <div class="refresh-label">🔄 WANT A FRESH REPORT?</div>
+  <div id="refresh-content"><div class="refresh-hint">Tap to see how to refresh ↓</div></div>
+</div>
+
+<div class="footer">MARCO ISLAND FISHING AGENT &middot; APRIL 18, 2026</div>
+</div>
+
+<script>
+if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone) {
+  document.getElementById('installBanner').style.display = 'block';
+}
+function switchTab(t) {
+  ['catches','breakdown','script'].forEach(function(id) {
+    document.getElementById('pane-' + id).style.display = t === id ? 'block' : 'none';
+    document.getElementById('tab-' + id).className = 'tab' + (t === id ? ' active' : '');
+  });
+}
+function toggleSection(h) {
+  var b = h.nextElementSibling;
+  var c = h.querySelector('.chevron');
+  var open = b.style.display !== 'none';
+  b.style.display = open ? 'none' : 'block';
+  h.style.borderBottom = open ? 'none' : '';
+  c.textContent = open ? '▼' : '▲';
+}
+var refreshOpen = false;
+function toggleRefresh() {
+  refreshOpen = !refreshOpen;
+  document.getElementById('refresh-content').innerHTML = refreshOpen
+    ? '<p style="font-size:13px;color:#78350f;line-height:1.8">Go back to your Claude chat and type:<br><span class="refresh-cmd">"run a new one"</span></p>'
+    : '<div class="refresh-hint">Tap to see how to refresh ↓</div>';
+}
+function copyEmail() {
+  var text = "🎣 MARCO ISLAND FISHING REPORT — April 18, 2026\n🏆 GRAND SLAM SEASON — Snook · Tarpon · Redfish all in play\n\nINSHORE:\n• Snook 🔥 HOT — Passes, beaches & backcountry. Beach sight fishing active.\n• Redfish 🔥 HOT — PEAK MONTH. Open flats & island edges. Tailing fish visible.\n• Jack Crevalle 🔥 HOT — Passes and beach zone.\n• Seatrout ✅ GOOD — Rookery Bay grass flats on popping corks.\n• Pompano ✅ GOOD — Sandy edges and passes.\n\nNEARSHORE (within 5mi):\n• Spanish Mackerel 🔥 HOT — Beach zone with baitfish stacked coast to coast.\n• Mangrove Snapper 🔥 HOT — Both reefs 1mi & 5mi from Caxambas Pass.\n• Goliath Grouper 🔥 HOT — Nearshore wrecks ramping up for April.\n• Kingfish ✅ GOOD — Beach zone with mackerel.\n• Tripletail ✅ GOOD — Floating debris 2-4 miles out.\n\nBACKWATER & BRIDGE:\n• Tarpon 🔥 HOT — MIGRATION BUILDING. Backcountry bays + beaches. 50-150 lbs.\n• Snook 🔥 HOT — Outside points & mangrove bends. Gin clear sight fishing.\n• Redfish 🔥 HOT — Open flats, tailing fish visible. Peak month.\n• Backcountry Sharks ✅ GOOD — Same bays as tarpon.\n\nPro tip: Backcountry at first light → Caxambas Pass outgoing tide → beach sight fishing mid-morning. Grand slam before noon is realistic.";
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!'; btn.className = 'copy-btn done';
+      setTimeout(function(){ btn.textContent = 'Copy for Email'; btn.className = 'copy-btn'; }, 2500);
+    });
+  }
+}
+function copyScript() {
+  var text = document.getElementById('scriptText').innerText;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('scriptBtn');
+      btn.textContent = '✓ Copied! Paste into D-ID'; btn.className = 'script-btn done';
+      setTimeout(function(){ btn.textContent = '📋 Copy Script for D-ID'; btn.className = 'script-btn'; }, 3000);
+    });
+  }
+}
+</script>
+</body>
+</html>
