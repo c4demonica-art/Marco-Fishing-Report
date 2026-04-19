@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Marco Fishing">
+<meta name="theme-color" content="#1a0e00">
+<title>Marco Island Fishing Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;background:linear-gradient(170deg,#1a0e00 0%,#2d1a00 40%,#0d0800 100%);font-family:-apple-system,sans-serif;color:#d4b896;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:680px;margin:0 auto;padding:32px 16px 80px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:20px}
+.badge{display:inline-block;font-size:11px;font-family:monospace;letter-spacing:.16em;color:#a16207;background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.15);border-radius:20px;padding:5px 16px;margin-bottom:12px}
+h1{font-family:Georgia,serif;font-size:clamp(28px,7vw,44px);font-weight:800;color:#fef3c7;line-height:1.08;letter-spacing:-.02em;margin-bottom:5px}
+.subhead{color:#78350f;font-size:11px;font-family:monospace}
+.new-badge{display:inline-block;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#f97316;font-family:monospace;margin-left:5px;vertical-align:middle}
+.emailbar{background:rgba(234,179,8,.05);border:1px solid rgba(234,179,8,.12);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.emailbar span{color:#a16207;font-size:12px;font-family:monospace;flex:1}
+.emailbar em{color:#ca8a04;font-style:normal}
+.copy-btn{background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:5px 13px;color:#ca8a04;font-size:12px;cursor:pointer;font-family:monospace;white-space:nowrap}
+.copy-btn.done{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:#86efac}
+.tabs{display:flex;background:rgba(0,0,0,.3);border-radius:12px;margin-bottom:16px;overflow:hidden;border:1px solid rgba(234,179,8,.1)}
+.tab{flex:1;padding:10px 4px;background:transparent;border:none;border-bottom:2px solid transparent;color:#78350f;font-size:11px;font-weight:600;cursor:pointer;font-family:monospace;letter-spacing:.03em}
+.tab.active{background:rgba(234,179,8,.15);border-bottom-color:#ca8a04;color:#fef3c7}
+.overview{background:rgba(254,243,199,.03);border:1px solid rgba(234,179,8,.18);border-radius:16px;padding:16px 18px;margin-bottom:12px}
+.sec-label{font-size:10px;color:#a16207;font-family:monospace;letter-spacing:.1em;margin-bottom:7px}
+.overview p{color:#d4b896;font-size:14px;line-height:1.78;margin-bottom:10px}
+.cond-box{background:rgba(0,0,0,.2);border-radius:9px;padding:9px 13px;font-size:13px;color:#a8947a;line-height:1.6}
+.section-card{background:rgba(254,252,232,.02);border:1px solid rgba(234,179,8,.16);border-radius:16px;overflow:hidden;margin-bottom:11px}
+.sec-hdr{background:rgba(234,179,8,.07);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.sec-hdr h2{flex:1;font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fef08a}
+.chevron{color:#a16207;font-size:13px}
+.sec-body{padding:13px 16px;border-top:1px solid rgba(234,179,8,.1)}
+.sp-row{background:rgba(0,0,0,.22);border-radius:10px;padding:10px 12px;margin-bottom:7px;border-left:3px solid rgba(234,179,8,.35)}
+.sp-name-row{display:flex;align-items:center;gap:7px;margin-bottom:4px;flex-wrap:wrap}
+.sp-name{font-family:Georgia,serif;font-size:15px;font-weight:700;color:#fef9c3}
+.rating{font-size:11px;font-family:monospace;padding:2px 8px;border-radius:10px}
+.HOT{color:#f97316;background:rgba(249,115,22,.12)}
+.GOOD{color:#22c55e;background:rgba(34,197,94,.1)}
+.SLOW{color:#94a3b8;background:rgba(148,163,184,.1)}
+.sp-detail{font-size:13px;color:#a8947a;line-height:1.65}
+.catch-meta{font-size:11px;color:#a16207;font-family:monospace;letter-spacing:.1em;margin-bottom:11px}
+.catch-card{background:rgba(0,0,0,.25);border:1px solid rgba(234,179,8,.13);border-radius:13px;padding:12px 14px;margin-bottom:9px}
+.catch-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.catch-who{font-family:Georgia,serif;font-size:14px;font-weight:700;color:#fef3c7}
+.catch-loc{font-size:11px;color:#a16207;font-family:monospace;margin-top:2px}
+.catch-date{font-size:11px;color:#44200a;font-family:monospace;white-space:nowrap}
+.catch-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.ct{background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.15);border-radius:20px;padding:2px 8px;font-size:11px;color:#ca8a04;font-family:monospace}
+.catch-text{font-size:13px;color:#a8947a;line-height:1.65}
+.catch-src{font-size:10px;color:#2a1200;font-family:monospace;margin-top:6px}
+.script-box{background:rgba(0,0,0,.3);border:1px solid rgba(234,179,8,.15);border-radius:16px;padding:18px;margin-bottom:12px}
+.script-box h3{font-family:Georgia,serif;font-size:16px;color:#fef08a;margin-bottom:6px}
+.script-box p{font-size:13px;color:#78350f;line-height:1.7;margin-bottom:12px}
+.script-text{background:rgba(0,0,0,.4);border:1px solid rgba(234,179,8,.2);border-radius:10px;padding:14px 16px;font-size:14px;color:#d4b896;line-height:1.85;font-family:Georgia,serif;white-space:pre-wrap;margin-bottom:12px}
+.script-btn{width:100%;background:linear-gradient(135deg,#d97706,#92400e);color:#fef3c7;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:monospace;letter-spacing:.04em}
+.script-btn.done{background:rgba(34,197,94,.2);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.footer{text-align:center;margin-top:22px;color:#2a1200;font-size:11px;font-family:monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="badge">MARCO ISLAND, FLORIDA</div>
+  <h1>Fishing Report</h1>
+  <div class="subhead"><!--DATE--> &middot; Inshore &middot; Nearshore &le;5mi &middot; Backwater <span class="new-badge">FRESH</span></div>
+</div>
+
+<div class="emailbar">
+  <span>📧</span>
+  <span>Weekly &rarr; <em>C4demonica@gmail.com</em></span>
+  <button class="copy-btn" onclick="document.execCommand('copy')">Copy for Email</button>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-catches" onclick="switchTab('catches')">🎣 CATCHES</button>
+  <button class="tab" id="tab-breakdown" onclick="switchTab('breakdown')">📊 BREAKDOWN</button>
+  <button class="tab" id="tab-script" onclick="switchTab('script')">🎬 D-ID SCRIPT</button>
+</div>
+
+<div id="pane-catches">
+  <div class="catch-meta">LATEST CATCHES &middot; <!--DATE--></div>
+  <!--CATCHES-->
+</div>
+
+<div id="pane-breakdown" style="display:none">
+  <div class="overview">
+    <div class="sec-label">📋 OVERVIEW — <!--DATE--></div>
+    <p><!--OVERVIEW--></p>
+  </div>
+  <!--BREAKDOWN-->
+</div>
+
+<div id="pane-script" style="display:none">
+  <div class="script-box">
+    <h3>🎬 D-ID Spokesperson Script</h3>
+    <p>Copy this, upload to <em>d-id.com</em>, paste, pick a voice, generate.</p>
+    <div class="script-text" id="scriptText"><!--SCRIPT--></div>
+    <button class="script-btn" id="scriptBtn" onclick="copyScript()">📋 Copy Script</button>
+  </div>
+</div>
+
+<div class="footer">MARCO ISLAND FISHING AGENT &middot; <!--DATE--></div>
+</div>
+
+<script>
+function switchTab(t){['catches','breakdown','script'].forEach(function(id){document.getElementById('pane-'+id).style.display=t===id?'block':'none';document.getElementById('tab-'+id).className='tab'+(t===id?' active':'');});}
+function toggleSection(h){var b=h.nextElementSibling;var c=h.querySelector('.chevron');var open=b.style.display!=='none';b.style.display=open?'none':'block';c.textContent=open?'▼':'▲';}
+function copyScript(){var text=document.getElementById('scriptText').innerText;if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var btn=document.getElementById('scriptBtn');btn.textContent='✓ Copied!';btn.className='script-btn done';setTimeout(function(){btn.textContent='📋 Copy Script';btn.className='script-btn';},2500);});}}
+</script>
+</body>
+</html>
