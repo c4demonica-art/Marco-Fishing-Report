@@ -124,7 +124,7 @@ Tight lines.</div>
 <script>
 function switchTab(t){['catches','breakdown','script'].forEach(function(id){document.getElementById('pane-'+id).style.display=t===id?'block':'none';document.getElementById('tab-'+id).className='tab'+(t===id?' active':'');});}
 function toggleSection(h){var b=h.nextElementSibling;var c=h.querySelector('.chevron');var open=b.style.display!=='none';b.style.display=open?'none':'block';c.textContent=open?'▼':'▲';}
-function copyScript(){var text=document.getElementById('scriptText').innerText;if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var btn=document.getElementById('scriptBtn');btn.textContent='✓ Copied!';btn.className='script-btn';},2500);});}}
+function copyScript(){var text=document.getElementById('scriptText').innerText;if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var btn=document.getElementById('scriptBtn');btn.textContent='✓ Copied!';btn.className='script-btn done';setTimeout(function(){btn.textContent='📋 Copy Script';btn.className='script-btn';},2500);});}}
 </script>
 </body>
 </html>
