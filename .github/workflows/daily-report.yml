@@ -21,18 +21,40 @@ jobs:
         with:
           ref: main
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install 'anthropic>=0.40.0'
-
-      - name: Generate report
+      - name: Generate report with Claude Code
+        uses: anthropics/claude-code-action@v1
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python scripts/generate_report.py
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        with:
+          claude_args: |
+            --model claude-opus-4-7
+            --allowedTools "WebSearch,WebFetch,Read,Write,Edit,Bash(date:*)"
+          prompt: |
+            You are generating today's Marco Island Fishing Report. Run the full routine end-to-end.
+
+            1. Read `template.html` from the repo root. It contains five placeholders you must replace:
+               `<!--DATE-->`, `<!--OVERVIEW-->`, `<!--CATCHES-->`, `<!--BREAKDOWN-->`, `<!--SCRIPT-->`.
+            2. Use WebSearch (2 searches total) to pull recent Marco Island / Naples / Ten Thousand Islands
+               fishing intel. Prefer sources like naplesfishingcharters.org, swflguideservice.com,
+               fishingbooker.com, snookhookerfishing.com, naplesgonefishin.com, and local guide blogs.
+            3. Build these five strings:
+               - DATE: today's date in "Month D, YYYY" format (America/New_York timezone).
+               - OVERVIEW: 3-4 plain-text sentences summarizing this week's bite.
+               - CATCHES_HTML: exactly 5 `<div class="catch-card">` blocks. Each contains
+                 `.catch-top > div > .catch-who + .catch-loc`, then `.catch-date` inside
+                 `.catch-top`, then `.catch-tags` (spans with class `ct`), `.catch-text`, `.catch-src`.
+               - BREAKDOWN_HTML: exactly 3 `<div class="section-card">` sections (Inshore, Nearshore,
+                 Backwater). Each has `.sec-hdr` (h2 + chevron) and `.sec-body` with `.sp-row` entries.
+                 Each sp-row has `.sp-name-row` (`.sp-name` + `.rating` with class `HOT`/`GOOD`/`SLOW`
+                 and an emoji) and `.sp-detail`.
+               - SCRIPT_TEXT: 250-320 word first-person spoken script for a D-ID avatar. Conversational
+                 tone, opens with "Hey there, anglers", covers inshore/backcountry/nearshore, closes with
+                 "Tight lines." Plain text with double-newline paragraph breaks; spell out numbers.
+            4. Replace each placeholder in the template with the corresponding string and Write the result
+               to `index.html` in the repo root.
+            5. Report the final word count of SCRIPT_TEXT and the byte size of index.html.
+
+            Do NOT commit or push; a later workflow step handles that.
 
       - name: Commit and push index.html
         run: |
