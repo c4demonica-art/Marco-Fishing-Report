@@ -1,0 +1,48 @@
+name: Daily Fishing Report
+
+on:
+  schedule:
+    # 11:00 UTC = 7am EDT (summer) / 6am EST (winter). Accepted drift.
+    - cron: '0 11 * * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: daily-report
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install 'anthropic>=0.40.0'
+
+      - name: Generate report
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_report.py
+
+      - name: Commit and push index.html
+        run: |
+          git config user.name 'marco-report-bot'
+          git config user.email 'marco-report-bot@users.noreply.github.com'
+          if git diff --quiet -- index.html; then
+            echo 'No changes to index.html; skipping commit.'
+            exit 0
+          fi
+          TODAY=$(TZ=America/New_York date '+%B %-d, %Y')
+          git add index.html
+          git commit -m "Daily report: ${TODAY}"
+          git push origin main
